@@ -155,6 +155,19 @@ cargo +nightly test
 cargo +nightly contract build
 ```
   
+```
+git clone https://github.com/paritytech/substrate.git
+```
+  
+```
+cd substrate
+```
+  
+```
+cargo +nightly build --package subkey --release #??? is this necessary?
+cargo build --package subkey --release
+```
+  
 
 ```
 npm install -g @polkadot/api-cli #A cli tool to allow you to make API calls to any running node
