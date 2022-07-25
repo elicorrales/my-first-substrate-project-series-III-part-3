@@ -1,4 +1,7 @@
-# my-first-substrate-project-series-III-part-3
+# my-first-substrate-project-series-III-part-3  
+  
+Reference: https://docs.substrate.io/tutorials/smart-contracts/first-smart-contract/  
+  
 
 ```
 rustup update
@@ -57,4 +60,9 @@ Yup, from  https://crates.io/crates/cargo-contract :
 cargo install cargo-contract --force
 ```
   
+Once ```cargo-contract``` is installed, you can verify by:  
+```
+cargo contract --help
+```
   
+
