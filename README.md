@@ -152,10 +152,39 @@ cargo +nightly test
 ```
   
 ```
-cargo +nightly contract build
+cargo +nightly contract build # <---???is nightly necessary?
+cargo contract build
 ```
   
 ```
+cargo contract upload
+```
+  
+OUTPUT:
+```
+error: The following required arguments were not provided:
+    --suri <suri>
+```
+  
+```
+cargo contract upload --suri asdf
+```
+  
+OUTPUT:
+```
+ERROR: No 'ink_lang' dependency found
+```
+  
+Edit Cargo.toml:  Enable the ```[dependencies]``` section and make sure it has:  
+```
+[dependencies]
+#cargo contract uplodad (deployment) will not work without this:
+ink_lang = { version = "3", default-features = false }
+```
+  
+
+
+
 git clone https://github.com/paritytech/substrate.git
 ```
   
@@ -168,7 +197,22 @@ cargo +nightly build --package subkey --release #??? is this necessary?
 cargo build --package subkey --release
 ```
   
-
+```
+ ./target/release/subkey generate
+ ```
+   
+ OUTPUT:  
+ ```
+ Secret phrase:       sell holiday brief music walk screen twist maple load crucial busy bottom
+  Network ID:        substrate
+  Secret seed:       0x439231d9f13b2e57603312db7dc3704ae7c1d6a353c9bf5d982051f69d870811
+  Public key (hex):  0xae344b6e58b5d68105f4d8bf986128f827e034e42644a3c8f6067ffc2ee96374
+  Account ID:        0xae344b6e58b5d68105f4d8bf986128f827e034e42644a3c8f6067ffc2ee96374
+  Public key (SS58): 5G17iwJaXvBWx8evNGX929WyGzXLaRt9x2mJU8WEPLg9Yd7t
+  SS58 Address:      5G17iwJaXvBWx8evNGX929WyGzXLaRt9x2mJU8WEPLg9Yd7t
+  ```
+    
+  
 ```
 npm install -g @polkadot/api-cli #A cli tool to allow you to make API calls to any running node
 npm install -g @polkadot/json-serve #A server that serves JSON outputs for specific queries
