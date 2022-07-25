@@ -65,7 +65,20 @@ OUTPUT:
 error: failed to run custom build command for `openssl-sys v0.9.75`
 ...
 ...
-  run pkg_config fail: "Could not run `\"pkg-config\" \"--libs\" \"--cflags\" \"openssl\"`\nThe pkg-config command could not be found.\n\nMost likely, you need to install a pkg-config package for your OS.\nTry `apt install pkg-config`, or `yum install pkg-config`,\nor `pkg install pkg-config` depending on your distribution.\n\nIf you've already installed it, ensure the pkg-config command is one of the\ndirectories in the PATH environment variable.\n\nIf you did not expect this build to link to a pre-installed system library,\nthen check documentation of the openssl-sys crate for an option to\nbuild the library from source, or disable features or dependencies\nthat require pkg-config."
+  run pkg_config fail: "Could not run `\"pkg-config\" \"--libs\" \"--cflags\" \"openssl\"`\nThe pkg-config command could not be found.
+  
+  Most likely, you need to install a pkg-config package for your OS.
+  
+  Try `apt install pkg-config`, or `yum install pkg-config`,
+  or `pkg install pkg-config` depending on your distribution.
+  
+  If you've already installed it, ensure the pkg-config command is one of the
+  directories in the PATH environment variable.
+  
+  If you did not expect this build to link to a pre-installed system library,
+  then check documentation of the openssl-sys crate for an option to
+  build the library from source, or disable features or dependencies
+  that require pkg-config."
 ```
   
 
