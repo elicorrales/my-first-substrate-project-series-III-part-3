@@ -56,11 +56,15 @@ cargo install dylint-link
   
 As part of a typical rust/cargo environment, you might have some build abilities for WASM, but it the ```cargo-contract``` seems to be a one-stop shopping.  
   
+```cargo-dylint``` is also required when you go to run ```cargo contract build```(further down).  
+  
 ```
 cargo install cargo-dylint
 ```
   
-OUTPUT:
+### Possible errors attempting to install cargo-dylint  
+  
+#### OUTPUT:
 ```
 error: failed to run custom build command for `openssl-sys v0.9.75`
 ...
@@ -80,14 +84,34 @@ error: failed to run custom build command for `openssl-sys v0.9.75`
   build the library from source, or disable features or dependencies
   that require pkg-config."
 ```
+
+#### Solution:  
+```
+ sudo apt install -y pkg-config
+ ```
+
+#### OUTPUT:  
+```
+ error: failed to run custom build command for `openssl-sys v0.9.75`
+...
+...
+run pkg_config fail: "`\"pkg-config\" \"--libs\" \"--cflags\" \"openssl\"` did not exit successfully: exit status: 1
+error: could not find system library 'openssl' required by the 'openssl-sys' crate
+--- stderr
+Package openssl was not found in the pkg-config search path.
+Perhaps you should add the directory containing `openssl.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'openssl' found"
+```
   
-
-
-
-```cargo-dylint``` is required when you go to run ```cargo contract build```(further down).  
+#### Solution:  
+```
+sudo apt install -y libssl-dev
 ```
   
 
+
+```
 cargo --help | grep list
 ```
   
