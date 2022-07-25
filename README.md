@@ -53,7 +53,66 @@ cargo install dylint-link
 >  
 > _cargo-contract  
 > Setup and deployment tool for developing Wasm based smart contracts via ink!_  
-    
+  
+As part of a typical rust/cargo environment, you might have some build abilities for WASM, but it the ```cargo-contract``` seems to be a one-stop shopping.  
+  
+
+```
+cargo --help | grep list
+```
+  
+OUTPUT:
+```
+$ cargo --help|grep list
+        --list                  List installed commands
+Some common cargo commands are (see all commands with --list):
+    update      Update dependencies listed in Cargo.lock
+```
+  
+So the above gives us ```--list```.  
+  
+
+```
+cargo --list | grep build
+```
+  
+OUTPUT:
+```
+$ cargo --list | grep build
+    b                    alias: build
+    build                Compile a local package and all of its dependencies
+    build-bpf
+    test                 Execute all unit and integration tests and build examples of a local package
+```
+  
+Notice there is no reference (above) to anything WASM.  
+  
+```
+cargo build --help|grep target
+```
+  
+OUTPUT:  
+```
+$ cargo build --help|grep target
+        --test [<NAME>]             Build only the specified test target
+        --bench [<NAME>]            Build only the specified bench target
+        --all-targets               Build all targets
+        --target <TRIPLE>           Build for the target triple
+        --target-dir <DIRECTORY>    Directory for all generated artifacts
+```
+  
+The ```--target <TRIPLE>``` is what can build a WASM binary.  
+  
+
+```
+cargo build --target wasm32-unknown-unknown --release
+```
+  
+However, we have no way to deploy it to any blockchain.  
+  
+Thus, ```cargo-contract```.  
+  
+
 ```
 cargo install cargo-contract
 ```
@@ -61,6 +120,23 @@ cargo install cargo-contract
 Once ```cargo-contract``` is installed, you can verify by:  
 ```
 cargo contract --help
+```
+  
+```
+$ cargo contract --help
+cargo-contract 1.4.0-unknown-x86_64-unknown-linux-gnu
+Utilities to develop Wasm smart contracts
+
+USAGE:
+    cargo contract <SUBCOMMAND>
+
+SUBCOMMANDS:
+    new            Setup and create a new smart contract project
+    build          Compiles the contract, generates metadata, bundles both together in a
+                       `<name>.contract` file
+    upload         Upload contract code
+    instantiate    Instantiate a contract
+    call           Call a contract
 ```
   
 ```
@@ -75,37 +151,6 @@ cd flipper
 cargo +nightly test
 ```
   
-```
-cargo --help | grep list
-```
-  
-OUTPUT:
-```
-$ cargo --help|grep list
-        --list                  List installed commands
-Some common cargo commands are (see all commands with --list):
-    update      Update dependencies listed in Cargo.lock
-```
-  
-```
-cargo --list | grep build
-```
-  
-```
-$ cargo build --help|grep target
-        --test [<NAME>]             Build only the specified test target
-        --bench [<NAME>]            Build only the specified bench target
-        --all-targets               Build all targets
-        --target <TRIPLE>           Build for the target triple
-        --target-dir <DIRECTORY>    Directory for all generated artifacts
-```
-  
-
-```
-cargo build --target wasm32-unknown-unknown --release
-```
-  
-
 ```
 cargo +nightly contract build
 ```
