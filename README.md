@@ -55,7 +55,9 @@ Yup, from  https://crates.io/crates/cargo-contract :
 >  
 > _cargo-contract  
 > Setup and deployment tool for developing Wasm based smart contracts via ink!_  
->  
+  
+We might need the cargo ```cargo-contract``` crate because we do not currently have a way to ```deploy``` to a blockchain.
+  
 ```
 cargo install cargo-contract --force
 ```
@@ -77,6 +79,37 @@ cd flipper
 cargo +nightly test
 ```
   
+```
+cargo --help | grep list
+```
+  
+OUTPUT:
+```
+$ cargo --help|grep list
+        --list                  List installed commands
+Some common cargo commands are (see all commands with --list):
+    update      Update dependencies listed in Cargo.lock
+```
+  
+```
+cargo --list | grep build
+```
+  
+```
+$ cargo build --help|grep target
+        --test [<NAME>]             Build only the specified test target
+        --bench [<NAME>]            Build only the specified bench target
+        --all-targets               Build all targets
+        --target <TRIPLE>           Build for the target triple
+        --target-dir <DIRECTORY>    Directory for all generated artifacts
+```
+  
+
+```
+cargo build --target wasm32-unknown-unknown --release
+```
+  
+
 ```
 cargo +nightly contract build
 ```
