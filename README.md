@@ -18,7 +18,7 @@ rustup target add wasm32-unknown-unknown --toolchain nightly
 ```
 
 What is ```binaryen``` ?  
-Binaryen is a compiler and toolchain infrastructure library for WebAssembly, written in C++. It aims to make compiling to WebAssembly easy, fast, and effective.  
+> _Binaryen is a compiler and toolchain infrastructure library for WebAssembly, written in C++. It aims to make compiling to WebAssembly easy, fast, and effective._  
   
 ```
 sudo apt install binaryen
