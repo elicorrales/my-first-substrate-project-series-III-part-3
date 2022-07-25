@@ -65,4 +65,28 @@ Once ```cargo-contract``` is installed, you can verify by:
 cargo contract --help
 ```
   
+```
+cargo contract new flipper
+```
+  
+```
+cd flipper
+```
+  
+```
+cargo +nightly test
+```
+  
+```
+cargo +nightly contract build
+```
+  
+
+```
+npm install -g @polkadot/api-cli #A cli tool to allow you to make API calls to any running node
+npm install -g @polkadot/json-serve #A server that serves JSON outputs for specific queries
+npm install -g @polkadot/monitor-rpc #A simple monitoring interface that checks the health of a remote node via RPC
+npm install -g @polkadot/signer-cli #A cli tool that allows you to generate transactions in one terminal and sign them in another terminal (or computer)
+npm install -g @polkadot/vanitygen #Generate vanity addresses, matching some pattern
+```
 
