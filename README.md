@@ -48,18 +48,14 @@ It seems the ```cargo-dyint``` is a command-line tool (that uses ```dylint-link`
 cargo install dylint-link
 ```
   
-
-Looks like the ```cargo-contract``` (crate?) is the command-line (cli) I was looking for... that help us deploy our smart contract to the node?  
-Yup, from  https://crates.io/crates/cargo-contract :  
+```dylint-link``` is required in order to install ```cargo-contract```.  And ```cargo-contract``` is required if you want to deploy WASM binaries.  
   
 >  
 > _cargo-contract  
 > Setup and deployment tool for developing Wasm based smart contracts via ink!_  
-  
-We might need the cargo ```cargo-contract``` crate because we do not currently have a way to ```deploy``` to a blockchain.
-  
+    
 ```
-cargo install cargo-contract --force
+cargo install cargo-contract
 ```
   
 Once ```cargo-contract``` is installed, you can verify by:  
