@@ -56,8 +56,25 @@ cargo install dylint-link
   
 As part of a typical rust/cargo environment, you might have some build abilities for WASM, but it the ```cargo-contract``` seems to be a one-stop shopping.  
   
-
 ```
+cargo install cargo-dylint
+```
+  
+OUTPUT:
+```
+error: failed to run custom build command for `openssl-sys v0.9.75`
+...
+...
+  run pkg_config fail: "Could not run `\"pkg-config\" \"--libs\" \"--cflags\" \"openssl\"`\nThe pkg-config command could not be found.\n\nMost likely, you need to install a pkg-config package for your OS.\nTry `apt install pkg-config`, or `yum install pkg-config`,\nor `pkg install pkg-config` depending on your distribution.\n\nIf you've already installed it, ensure the pkg-config command is one of the\ndirectories in the PATH environment variable.\n\nIf you did not expect this build to link to a pre-installed system library,\nthen check documentation of the openssl-sys crate for an option to\nbuild the library from source, or disable features or dependencies\nthat require pkg-config."
+```
+  
+
+
+
+```cargo-dylint``` is required when you go to run ```cargo contract build```(further down).  
+```
+  
+
 cargo --help | grep list
 ```
   
@@ -103,7 +120,7 @@ $ cargo build --help|grep target
   
 The ```--target <TRIPLE>``` is what can build a WASM binary.  
   
-
+Example:  
 ```
 cargo build --target wasm32-unknown-unknown --release
 ```
@@ -150,10 +167,9 @@ cd flipper
 ```
 cargo +nightly test
 ```
-  
+This may seem to work but issues further down.  
 ```
-cargo +nightly contract build # <---???is nightly necessary?
-cargo contract build
+cargo build --target wasm32-unknown-unknown --release
 ```
   
 ```
@@ -166,6 +182,7 @@ error: The following required arguments were not provided:
     --suri <suri>
 ```
   
+
 ```
 cargo contract upload --suri asdf
 ```
@@ -182,7 +199,28 @@ Edit Cargo.toml:  Enable the ```[dependencies]``` section and make sure it has:
 ink_lang = { version = "3", default-features = false }
 ```
   
-
+Try again:  
+```
+cargo contract upload --suri asdf
+```
+  
+OUTPUT:  
+```
+ERROR: Metadata file not found. Try building with `cargo contract build`.
+```
+  
+  
+```
+cargo +nightly contract build # <---???is nightly necessary?
+cargo contract build
+```
+  
+OUTPU:
+```
+ERROR: Mismatching versions of `scale-info` were found!
+Please ensure that your contract and your ink! dependencies use a compatible version of this package.
+```
+  
 
 
 git clone https://github.com/paritytech/substrate.git
