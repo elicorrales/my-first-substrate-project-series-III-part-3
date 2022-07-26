@@ -418,6 +418,28 @@ This time it seems to be a valid error since we put in a bad ```--suri``` value.
 ERROR: Secret string error
 ```
   
+```
+$ cargo contract upload --suri 0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a
+ERROR: Rpc error: Networking or low-level protocol error: Error when opening the TCP socket: Connection refused (os error 111)
+
+Caused by:
+    0: Networking or low-level protocol error: Error when opening the TCP socket: Connection refused (os error 111)
+    1: Error when opening the TCP socket: Connection refused (os error 111)
+```
+  
+Let's start up the node-template:
+```
+ substrate-node-template/target/release/node-template --dev  --no-prometheus
+ ```
+   
+ ```
+ $ cargo contract upload --suri 0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a
+ERROR: Metadata: Pallet not found
+
+Caused by:
+    Pallet not found
+```
+  
 
 
 OUTPUT:
