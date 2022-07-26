@@ -204,7 +204,7 @@ cd flipper
 ```
 cargo +nightly test
 ```
-This may seem to work but issues further down.  
+This (below) may seem to work but issues further down.  
 ```
 cargo build --target wasm32-unknown-unknown --release
 ```
@@ -252,7 +252,147 @@ cargo +nightly contract build # <---???is nightly necessary?
 cargo contract build
 ```
   
-OUTPU:
+YES! ```cargo contract build``` alone causes error: 
+```
+ERROR: cargo-contract cannot build using the "stable" channel. Switch to nightly.
+See https://github.com/paritytech/cargo-contract#build-requires-the-nightly-toolchain
+```
+  
+OUTPUT:  
+```
+$ cargo +nightly contract build
+ [1/5] Checking ink! linting rules
+Checking with toolchain `nightly-2022-03-14-x86_64-unknown-linux-gnu`
+    Finished dev [unoptimized + debuginfo] target(s) in 0.03s
+ [2/5] Building cargo project
+    Updating crates.io index
+error: "/home/IamDeveloper/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/Cargo.lock" does not exist, unable to build with the standard library, try:
+        rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+ERROR: `"/home/IamDeveloper/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo" "build" "--target=wasm32-unknown-unknown" "-Zbuild-std" "--no-default-features" "--release" "--target-dir=/home/IamDeveloper/MySoftwareProjects/blockchain/rust/rust-substrate-blockchain-projects/my-first-substrate-projects/my-first-project-prep-lesson/my-first-smart-contracts/test/target/ink" "--features=ink_env/ink-debug"` failed with exit code: Some(101)
+```
+  
+So we check what we have with ```rustup show```.  
+OUTPUT:
+```
+$ rustup show
+Default host: x86_64-unknown-linux-gnu
+rustup home:  /home/IamDeveloper/.rustup
+
+installed toolchains
+--------------------
+
+stable-x86_64-unknown-linux-gnu (default)
+nightly-2022-03-14-x86_64-unknown-linux-gnu
+nightly-x86_64-unknown-linux-gnu
+bpf
+
+installed targets for active toolchain
+--------------------------------------
+
+wasm32-unknown-unknown
+x86_64-unknown-linux-gnu
+
+active toolchain
+----------------
+
+stable-x86_64-unknown-linux-gnu (default)
+rustc 1.62.1 (e092d0b6b 2022-07-16)
+```
+  
+Thus we need to take above suggestion:
+```
+rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+```
+  
+After the above, we re-run:
+```
+cargo +nightly contract build
+```
+  
+OUTPUT: (the "Compiling test" refers to our temp smart contract project that we created):
+```
+   Compiling test v0.1.0 (/tmp/cargo-contract_pDkwu4)
+    Finished release [optimized] target(s) in 51.75s
+ [3/5] Post processing wasm file
+ [4/5] Optimizing wasm file
+ERROR: wasm-opt not found! Make sure the binary is in your PATH environment.
+
+We use this tool to optimize the size of your contract's Wasm binary.
+
+wasm-opt is part of the binaryen package. You can find detailed
+installation instructions on https://github.com/WebAssembly/binaryen#tools.
+
+There are ready-to-install packages for many platforms:
+* Debian/Ubuntu: apt-get install binaryen
+* Homebrew: brew install binaryen
+* Arch Linux: pacman -S binaryen
+* Windows: binary releases at https://github.com/WebAssembly/binaryen/releases
+IamDeveloper@SoftwareDevelopUbuntu2004
+$
+```
+  
+Let's do a cargo crate search:
+```
+$ cargo search wasm-opt
+wasm-opt = "0.0.0"        # wasm-opt bindings
+wasm-opt-sys = "0.0.0"    # Native wasm-opt build
+xtask-wasm = "0.1.5"      # Customizable subcomman
+```
+  
+Looks like the 1st one in the list.  
+```
+cargo install wasm-opt
+```
+  
+Try ```cargo +nightly contract build``` again.  
+  
+OUTPUT:
+```
+$ cargo +nightly contract build
+ [1/5] Checking ink! linting rules
+Checking with toolchain `nightly-2022-03-14-x86_64-unknown-linux-gnu`
+    Finished dev [unoptimized + debuginfo] target(s) in 0.03s
+ [2/5] Building cargo project
+    Updating crates.io index
+    Finished release [optimized] target(s) in 0.25s
+ [3/5] Post processing wasm file
+ [4/5] Optimizing wasm file
+ERROR: Unable to extract version information from ''.
+Your wasm-opt version is most probably too old. Make sure you use a version >= 99.
+
+If you tried installing from your system package manager the best
+way forward is to download a recent binary release directly:
+
+https://github.com/WebAssembly/binaryen/releases
+
+Make sure that the `wasm-opt` file from that release is in your `PATH`.
+```
+  
+Go to https://github.com/WebAssembly/binaryen/releases, find the latest release,  
+in this example, it is ```binaryen-version_109-x86_64-linux.tar.gz```.
+```
+  
+```
+binaryen-version_109-x86_64-linux.tar.gz
+$ mkdir temp
+$ mv binaryen-version_109-x86_64-linux.tar.gz temp/
+$ cd temp/
+$ tar -xvzf binaryen-version_109-x86_64-linux.tar.gz
+$ cd binaryen-version_109/
+$ ls -l
+total 12
+drwxr-xr-x 2 IamDeveloper IamDeveloper 4096 Jun 14 14:14 bin
+drwxr-xr-x 2 IamDeveloper IamDeveloper 4096 Jun 14 14:11 include
+drwxr-xr-x 2 IamDeveloper IamDeveloper 4096 Jun 14 14:11 lib
+$ sudo cp -r bin/* /bin
+$ sudo cp -r include/* /usr/include/
+$ sudo cp -r lib/* /lib64
+```
+    
+
+
+
+OUTPUT:
 ```
 ERROR: Mismatching versions of `scale-info` were found!
 Please ensure that your contract and your ink! dependencies use a compatible version of this package.
