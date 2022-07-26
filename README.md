@@ -248,8 +248,8 @@ ERROR: Metadata file not found. Try building with `cargo contract build`.
   
   
 ```
-cargo +nightly contract build # <---???is nightly necessary?
-cargo contract build
+cargo +nightly contract build # <---???is nightly necessary? YES!! (see further down)  
+cargo contract build  #<---- no good
 ```
   
 YES! ```cargo contract build``` alone causes error: 
@@ -368,27 +368,36 @@ https://github.com/WebAssembly/binaryen/releases
 Make sure that the `wasm-opt` file from that release is in your `PATH`.
 ```
   
-Go to https://github.com/WebAssembly/binaryen/releases, find the latest release,  
-in this example, it is ```binaryen-version_109-x86_64-linux.tar.gz```.
-```
+Turns out that my wasm-opt was a file in my ```.nvm``` packages, not ```/usr/bin```.  
   
+I had to re-arrange my ```PATH``` in ```.profile```.  
+
+But even after doing a ``` sudo apt -y install binaryen```, the version was still too old.  
+
+Thus, had to do the following:  
+
+Go to https://github.com/WebAssembly/binaryen/releases, find the latest release,  
+in this example, it is ```binaryen-version_109-x86_64-linux.tar.gz```.  
+Download  the tar.gz file. It ends up in my Windows User Downloads folder.  
+Opened another File Explorer, and in the URL bar, ```\\wsl$```.  
+Moved the tar.gz from Windows Downloads to ```\\wsl$```, the ```/home/<user>``` directory.  
+
 ```
-binaryen-version_109-x86_64-linux.tar.gz
-$ mkdir temp
-$ mv binaryen-version_109-x86_64-linux.tar.gz temp/
-$ cd temp/
-$ tar -xvzf binaryen-version_109-x86_64-linux.tar.gz
-$ cd binaryen-version_109/
-$ ls -l
+mkdir temp
+mv binaryen-version_109-x86_64-linux.tar.gz temp/
+cd temp/
+tar -xvzf binaryen-version_109-x86_64-linux.tar.gz
+cd binaryen-version_109/
+ls -l
 total 12
 drwxr-xr-x 2 IamDeveloper IamDeveloper 4096 Jun 14 14:14 bin
 drwxr-xr-x 2 IamDeveloper IamDeveloper 4096 Jun 14 14:11 include
 drwxr-xr-x 2 IamDeveloper IamDeveloper 4096 Jun 14 14:11 lib
-$ sudo cp -r bin/* /bin
-$ sudo cp -r include/* /usr/include/
-$ sudo cp -r lib/* /lib64
+sudo cp -r bin/* /bin
+sudo cp -r include/* /usr/include/
+sudo cp -r lib/* /lib64
 ```
-    
+  
 
 
 
