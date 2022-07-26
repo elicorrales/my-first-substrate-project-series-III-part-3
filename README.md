@@ -406,6 +406,18 @@ Now go back to the smart contract project where we have been trying to get the `
 This time, it does.  
 
 Now let's try to deploy it (```cargo contract upload```).  
+  
+We try again:
+```
+cargo contract upload --suri asdf
+```
+  
+This time it seems to be a valid error since we put in a bad ```--suri``` value.  
+  
+```
+ERROR: Secret string error
+```
+  
 
 
 OUTPUT:
