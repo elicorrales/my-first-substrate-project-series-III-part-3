@@ -396,9 +396,16 @@ drwxr-xr-x 2 IamDeveloper IamDeveloper 4096 Jun 14 14:11 lib
 sudo cp -r bin/* /bin
 sudo cp -r include/* /usr/include/
 sudo cp -r lib/* /lib64
+which wasm-opt
+/usr/bin/wasm-opt
+wasm-opt --version
+wasm-opt version 109 (version_109)
 ```
   
+Now go back to the smart contract project where we have been trying to get the ```cargo +nightly contract build``` to successfully build.  
+This time, it does.  
 
+Now let's try to deploy it (```cargo contract upload```).  
 
 
 OUTPUT:
